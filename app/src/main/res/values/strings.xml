@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">TixiEvent</string>
+    <string name="title_activity_verify_otp">VerifyOtpActivity</string>
+</resources>
