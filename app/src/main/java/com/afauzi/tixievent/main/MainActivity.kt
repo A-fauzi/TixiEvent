@@ -1,4 +1,4 @@
-package com.afauzi.tixievent
+package com.afauzi.tixievent.main
 
 import android.content.Intent
 import android.os.Bundle
@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.afauzi.feature_authentication.login.LoginActivity
 import com.afauzi.feature_authentication.register.RegisterActivity
 import com.afauzi.feature_authentication.reset_password.ResetPasswordActivity
+import com.afauzi.tixievent.verify_otp.VerifyOtpActivity
 import com.afauzi.tixievent.ui.theme.TixiEventTheme
 
 class MainActivity : ComponentActivity() {

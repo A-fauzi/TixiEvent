@@ -1,12 +1,6 @@
-package com.afauzi.tixievent
+package com.afauzi.tixievent.verify_otp.component
 
-import android.annotation.SuppressLint
-import android.os.Bundle
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
-import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
@@ -14,44 +8,30 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
-import androidx.compose.material.icons.Icons
-import androidx.compose.material.icons.outlined.ArrowBack
 import androidx.compose.material3.Button
 import androidx.compose.material3.ExperimentalMaterial3Api
-import androidx.compose.material3.Icon
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.LocalTextStyle
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
-import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.TextField
-import androidx.compose.material3.TextFieldDefaults
-import androidx.compose.material3.TopAppBar
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
-import androidx.compose.ui.text.input.VisualTransformation
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -61,42 +41,55 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.withContext
 
-class VerifyOtpActivity : ComponentActivity() {
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AppOtp()
-        }
-    }
+
+private fun formatTime(time: Int): String {
+    val minutes = time / 60
+    val seconds = time % 60
+    return "%02d:%02d".format(minutes, seconds)
 }
 
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
-@OptIn(ExperimentalMaterial3Api::class)
+
+@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
 @Composable
-fun AppOtp() {
-    val focusRequesters = List(4) { remember { FocusRequester() } }
-
-    // Declare the mutable states for otpOne, otpTwo, otpThree, and otpFour
-    val otps = List(4) { remember { mutableStateOf("") } }
-
-    TixiEventTheme {
-        Scaffold(
-            topBar = {
-                TopAppBar(
-                    title = { Text(text = "App Title") },
-                    navigationIcon = {
-                        IconButton(
-                            onClick = { /* Handle back button click */ }
-                        ) {
-                            Icon(
-                                imageVector = Icons.Outlined.ArrowBack,
-                                contentDescription = "Back"
-                            )
-                        }
-                    }
-                )
+fun CommonOtpTextField(
+    otp: MutableState<String>,
+    focusRequester: FocusRequester,
+    onNext: () -> Unit
+) {
+    val max = 1
+    val keyboardController = LocalSoftwareKeyboardController.current
+    OutlinedTextField(
+        value = otp.value,
+        singleLine = true,
+        onValueChange = { if (it.length <= max) otp.value = it },
+        keyboardOptions = KeyboardOptions(
+            keyboardType = KeyboardType.Number,
+            imeAction = ImeAction.Next
+        ),
+        keyboardActions = KeyboardActions(
+            onNext = {
+                onNext()
+                keyboardController?.show()
             }
-        ) {
+        ),
+        shape = RoundedCornerShape(20.dp),
+        modifier = Modifier
+            .width(60.dp)
+            .height(60.dp)
+            .focusRequester(focusRequester),
+        maxLines = 1,
+        textStyle = LocalTextStyle.current.copy(
+            textAlign = TextAlign.Center
+        )
+    )
+}
+
+@Composable
+fun VerifyOtpScreen() {
+    TixiEventTheme {
+
+        // My Top App Bar Component
+        TopAppBar {
             // A surface container using the 'background' color from the theme
             Surface(
                 modifier = Modifier
@@ -104,6 +97,9 @@ fun AppOtp() {
                     .padding(top = 56.dp),
                 color = MaterialTheme.colorScheme.background
             ) {
+                val focusRequesters = List(4) { remember { FocusRequester() } }
+                // Declare the mutable states for otpOne, otpTwo, otpThree, and otpFour
+                val otps = List(4) { remember { mutableStateOf("") } }
                 Column(
                     modifier = Modifier
                         .fillMaxWidth()
@@ -153,54 +149,11 @@ fun AppOtp() {
                 }
             }
         }
-
     }
-}
-
-private fun formatTime(time: Int): String {
-    val minutes = time / 60
-    val seconds = time % 60
-    return "%02d:%02d".format(minutes, seconds)
-}
-
-
-@OptIn(ExperimentalMaterial3Api::class, ExperimentalComposeUiApi::class)
-@Composable
-fun CommonOtpTextField(
-    otp: MutableState<String>,
-    focusRequester: FocusRequester,
-    onNext: () -> Unit
-) {
-    val max = 1
-    val keyboardController = LocalSoftwareKeyboardController.current
-    OutlinedTextField(
-        value = otp.value,
-        singleLine = true,
-        onValueChange = { if (it.length <= max) otp.value = it },
-        keyboardOptions = KeyboardOptions(
-            keyboardType = KeyboardType.Number,
-            imeAction = ImeAction.Next
-        ),
-        keyboardActions = KeyboardActions(
-            onNext = {
-                onNext()
-                keyboardController?.show()
-            }
-        ),
-        shape = RoundedCornerShape(20.dp),
-        modifier = Modifier
-            .width(60.dp)
-            .height(60.dp)
-            .focusRequester(focusRequester),
-        maxLines = 1,
-        textStyle = LocalTextStyle.current.copy(
-            textAlign = TextAlign.Center
-        )
-    )
 }
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview3() {
-    AppOtp()
+fun VerifyOtpScreenPrev() {
+    VerifyOtpScreen()
 }

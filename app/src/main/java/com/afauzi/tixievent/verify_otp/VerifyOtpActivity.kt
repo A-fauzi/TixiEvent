@@ -1,23 +1,26 @@
-package com.afauzi.feature_authentication.reset_password
+package com.afauzi.tixievent.verify_otp
 
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.tooling.preview.Preview
-import com.afauzi.feature_authentication.reset_password.component.ResetPasswordScreen
+import com.afauzi.tixievent.verify_otp.component.VerifyOtpScreen
 
-class ResetPasswordActivity : ComponentActivity() {
+class VerifyOtpActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
-            ResetPasswordScreen()
+            VerifyOtpScreen()
         }
     }
 }
 
+
+
+
 @Preview(showBackground = true)
 @Composable
-fun ResetPassActivityPrev() {
-    ResetPasswordScreen()
+fun GreetingPreview3() {
+    VerifyOtpScreen()
 }
