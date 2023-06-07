@@ -1,32 +1,48 @@
 package com.afauzi.tixievent.main
 
-import android.content.Intent
+import android.annotation.SuppressLint
 import android.os.Bundle
-import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.Button
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
+import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
-import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import com.afauzi.feature_authentication.login.LoginActivity
-import com.afauzi.feature_authentication.register.RegisterActivity
-import com.afauzi.feature_authentication.reset_password.ResetPasswordActivity
-import com.afauzi.tixievent.navigation_drawer.NavigationDrawerActivity
-import com.afauzi.tixievent.verify_otp.VerifyOtpActivity
-import com.afauzi.tixievent.ui.theme.TixiEventTheme
+import androidx.navigation.NavController
+import androidx.navigation.NavHostController
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import com.afauzi.tixievent.R
+import com.afauzi.tixievent.main.MainActivity.BottomNavItem
+import com.afauzi.tixievent.main.fragment_screen.EventScreen
+import com.afauzi.tixievent.main.fragment_screen.ExploreScreen
+import com.afauzi.tixievent.main.fragment_screen.MapScreen
+import com.afauzi.tixievent.main.fragment_screen.ProfileScreen
+import androidx.compose.material.BottomNavigation
+import androidx.compose.material.BottomNavigationItem
+import androidx.compose.material.Icon
+import androidx.compose.material.MaterialTheme
+import androidx.compose.material.Scaffold
+import androidx.compose.material.Text
+import androidx.compose.runtime.getValue
+import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
+import androidx.compose.ui.unit.sp
+import androidx.navigation.compose.currentBackStackEntryAsState
+import androidx.navigation.compose.rememberNavController
+import coil.ImageLoader
+import coil.compose.rememberAsyncImagePainter
+import coil.decode.SvgDecoder
+import com.afauzi.tixievent.main.fragment_screen.AddEventScreen
 
 class MainActivity : ComponentActivity() {
+    sealed class BottomNavItem(var title: String, var icon: Int, var screen_route: String) {
+        object Explore : BottomNavItem("Explore", R.raw.explore_filled, "explore")
+        object Event : BottomNavItem("Event", R.raw.calender_filled, "event")
+        object AddEvent : BottomNavItem("AddEvent", R.raw.add_event, "addEvent")
+        object Map : BottomNavItem("Map", R.raw.map_filled, "map")
+        object Profile : BottomNavItem("Profile", R.raw.user_filled, "profile")
+    }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
@@ -35,73 +51,96 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+@SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun App() {
-    val context = LocalContext.current
-    TixiEventTheme {
-        // A surface container using the 'background' color from the theme
-        Surface(
-            modifier = Modifier.fillMaxSize(),
-            color = MaterialTheme.colorScheme.background
-        ) {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-                    .padding(16.dp),
-                verticalArrangement = Arrangement.Center,
-                horizontalAlignment = Alignment.CenterHorizontally
+    val navController = rememberNavController()
+    Scaffold(
+        bottomBar = {
+            BottomNavigation(navController = navController)
+        }
+    ) {
 
-            ) {
-                for (i in 0..7) {
-                    when (i) {
-                        0 -> Button(onClick = {
-                            context.startActivity(Intent(context, LoginActivity::class.java))
-                        }) {
-                            Text(text = "Login")
-                        }
+        NavigationGraph(navController = navController)
+    }
+}
 
-                        1 -> Button(onClick = {
-                            context.startActivity(Intent(context, RegisterActivity::class.java))
-                        }) {
-                            Text(text = "Register")
-                        }
+@OptIn(ExperimentalAnimationApi::class)
+@Composable
+fun NavigationGraph(navController: NavHostController) {
+    NavHost(
+        navController = navController,
+        startDestination = BottomNavItem.Explore.screen_route
+    ) {
+        composable(BottomNavItem.Explore.screen_route) {
+            ExploreScreen()
+        }
+        composable(BottomNavItem.Event.screen_route) {
+            EventScreen()
+        }
+        composable(BottomNavItem.AddEvent.screen_route) {
+            AddEventScreen()
+        }
+        composable(BottomNavItem.Map.screen_route) {
+            MapScreen()
+        }
+        composable(BottomNavItem.Profile.screen_route) {
+            ProfileScreen()
+        }
+    }
+}
 
-                        2 -> Button(onClick = {
-                            Toast.makeText(context, "Event", Toast.LENGTH_SHORT).show()
-                        }) {
-                            Text(text = "Event")
-                        }
+@Composable
+fun BottomNavigation(navController: NavController) {
+    val items = listOf(
+        BottomNavItem.Explore,
+        BottomNavItem.Event,
+        BottomNavItem.AddEvent,
+        BottomNavItem.Map,
+        BottomNavItem.Profile
+    )
 
-                        3 -> Button(onClick = {
-                            Toast.makeText(context, "Ticket Clicked", Toast.LENGTH_SHORT).show()
-                        }) {
-                            Text(text = "Ticket")
-                        }
+    BottomNavigation(
+        backgroundColor = MaterialTheme.colors.primary,
+        contentColor = Color.Black
+    ) {
+        val imageLoader = ImageLoader.Builder(LocalContext.current)
+            .components {
+                add(SvgDecoder.Factory())
+            }
+            .build()
+        val navBackStackEntry by navController.currentBackStackEntryAsState()
+        val currentRoute = navBackStackEntry?.destination?.route
+        items.forEach { item ->
+            BottomNavigationItem(
+                icon = {
+                    Icon(
+                        painter = rememberAsyncImagePainter(model  = item.icon, imageLoader),
+                        contentDescription = item.title)
+                },
+                label = {
+                    Text(
+                        text = item.title,
+                        fontSize = 9.sp
+                    )
+                },
+                selectedContentColor = Color.Black,
+                unselectedContentColor = Color.Black.copy(0.4f),
+                alwaysShowLabel = true,
+                selected = currentRoute == item.screen_route,
+                onClick = {
+                    navController.navigate(item.screen_route) {
 
-                        4 -> Button(onClick = {
-                            Toast.makeText(context, "Transaction Clicked", Toast.LENGTH_SHORT)
-                                .show()
-                        }) {
-                            Text(text = "Transaction")
+                        navController.graph.startDestinationRoute?.let { screen_route ->
+                            popUpTo(screen_route) {
+                                saveState = true
+                            }
                         }
-                        5 -> Button(onClick = {
-                            context.startActivity(Intent(context, VerifyOtpActivity::class.java))
-                        }) {
-                            Text(text = "Otp Verify")
-                        }
-                        6 -> Button(onClick = {
-                            context.startActivity(Intent(context, ResetPasswordActivity::class.java))
-                        }) {
-                            Text(text = "Reset Password")
-                        }
-                        7 -> Button(onClick = {
-                            context.startActivity(Intent(context, NavigationDrawerActivity::class.java))
-                        }) {
-                            Text(text = "drawer")
-                        }
+                        launchSingleTop = true
+                        restoreState = true
                     }
                 }
-            }
+            )
         }
     }
 }
