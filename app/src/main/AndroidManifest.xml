@@ -13,6 +13,11 @@
         android:theme="@style/Theme.TixiEvent"
         tools:targetApi="31">
         <activity
+            android:name=".navigation_drawer.NavigationDrawerActivity"
+            android:exported="false"
+            android:label="@string/title_activity_navigation_drawer"
+            android:theme="@style/Theme.TixiEvent" />
+        <activity
             android:name=".verify_otp.VerifyOtpActivity"
             android:exported="false"
             android:label="@string/title_activity_verify_otp"

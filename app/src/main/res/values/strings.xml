@@ -1,4 +1,5 @@
 <resources>
     <string name="app_name">TixiEvent</string>
     <string name="title_activity_verify_otp">VerifyOtpActivity</string>
+    <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
 </resources>

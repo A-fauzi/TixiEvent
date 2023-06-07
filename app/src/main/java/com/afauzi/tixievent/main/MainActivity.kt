@@ -22,6 +22,7 @@ import androidx.compose.ui.unit.dp
 import com.afauzi.feature_authentication.login.LoginActivity
 import com.afauzi.feature_authentication.register.RegisterActivity
 import com.afauzi.feature_authentication.reset_password.ResetPasswordActivity
+import com.afauzi.tixievent.navigation_drawer.NavigationDrawerActivity
 import com.afauzi.tixievent.verify_otp.VerifyOtpActivity
 import com.afauzi.tixievent.ui.theme.TixiEventTheme
 
@@ -51,7 +52,7 @@ fun App() {
                 horizontalAlignment = Alignment.CenterHorizontally
 
             ) {
-                for (i in 0..6) {
+                for (i in 0..7) {
                     when (i) {
                         0 -> Button(onClick = {
                             context.startActivity(Intent(context, LoginActivity::class.java))
@@ -92,6 +93,11 @@ fun App() {
                             context.startActivity(Intent(context, ResetPasswordActivity::class.java))
                         }) {
                             Text(text = "Reset Password")
+                        }
+                        7 -> Button(onClick = {
+                            context.startActivity(Intent(context, NavigationDrawerActivity::class.java))
+                        }) {
+                            Text(text = "drawer")
                         }
                     }
                 }
