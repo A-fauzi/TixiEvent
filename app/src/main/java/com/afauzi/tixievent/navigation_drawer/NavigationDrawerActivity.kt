@@ -57,12 +57,22 @@ import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class NavigationDrawerActivity : ComponentActivity() {
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContent {
             AppDrawer()
         }
     }
+}
+
+@Composable
+private fun svgConverter(): ImageLoader {
+    return ImageLoader.Builder(LocalContext.current)
+        .components {
+            add(SvgDecoder.Factory())
+        }
+        .build()
 }
 
 @OptIn(ExperimentalMaterial3Api::class)
@@ -210,18 +220,13 @@ fun DrawerHeader(coroutineScope: CoroutineScope, drawerState: DrawerState) {
 
 @Composable
 fun DrawerItem(title: String, iconRes: Int, clickLable: () -> Unit) {
-    val imageLoader = ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
         modifier = Modifier.padding(horizontal = 16.dp, vertical = 8.dp)
     ) {
         Icon(
-            painter = rememberAsyncImagePainter(iconRes, imageLoader),
+            painter = rememberAsyncImagePainter(iconRes, svgConverter()),
             contentDescription = null,
             modifier = Modifier.size(24.dp)
         )

@@ -14,9 +14,11 @@
             android:theme="@style/Theme.TixiEvent" />
         <activity
             android:name=".login.LoginActivity"
-            android:exported="false"
+            android:exported="true"
             android:label="@string/title_activity_login"
-            android:theme="@style/Theme.TixiEvent" />
+            android:theme="@style/Theme.TixiEvent">
+
+        </activity>
     </application>
 
 </manifest>
