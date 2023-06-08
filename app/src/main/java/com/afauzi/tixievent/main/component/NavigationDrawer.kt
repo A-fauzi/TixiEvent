@@ -1,28 +1,33 @@
-package com.afauzi.tixievent.navigation_drawer
+package com.afauzi.tixievent.main.component
 
-import android.annotation.SuppressLint
-import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.ComponentActivity
-import androidx.activity.compose.setContent
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.ColumnScope
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.offset
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
+import androidx.compose.foundation.lazy.LazyRow
+import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.foundation.text.ClickableText
+import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Close
 import androidx.compose.material3.Button
+import androidx.compose.material3.Card
 import androidx.compose.material3.DrawerState
 import androidx.compose.material3.DrawerValue
 import androidx.compose.material3.ExperimentalMaterial3Api
@@ -40,6 +45,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.AnnotatedString
@@ -53,32 +59,13 @@ import coil.ImageLoader
 import coil.compose.rememberAsyncImagePainter
 import coil.decode.SvgDecoder
 import com.afauzi.tixievent.R
+import com.afauzi.tixievent.util.svgConverter
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
-class NavigationDrawerActivity : ComponentActivity() {
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        setContent {
-            AppDrawer()
-        }
-    }
-}
-
-@Composable
-private fun svgConverter(): ImageLoader {
-    return ImageLoader.Builder(LocalContext.current)
-        .components {
-            add(SvgDecoder.Factory())
-        }
-        .build()
-}
-
 @OptIn(ExperimentalMaterial3Api::class)
-@SuppressLint("UnusedMaterial3ScaffoldPaddingParameter")
 @Composable
-fun AppDrawer() {
+fun NavigationDrawer( content: @Composable () -> Unit ) {
     val context = LocalContext.current
 
     // State untuk mengontrol status buka/tutup drawer
@@ -101,41 +88,41 @@ fun AppDrawer() {
                     DrawerItem(
                         title = "My Profile",
                         iconRes = R.raw.user
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
                     DrawerItem(
                         title = "Message",
                         iconRes = R.raw.message
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
 
                     DrawerItem(
                         title = "Calender",
                         iconRes = R.raw.calendar
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
 
                     DrawerItem(
                         title = "Bookmark",
                         iconRes = R.raw.bookmark
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
 
                     DrawerItem(
                         title = "Contact Us",
                         iconRes = R.raw.contact_us
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
 
                     DrawerItem(
                         title = "Settings",
                         iconRes = R.raw.settings
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
 
                     DrawerItem(
                         title = "Helps & FAQs",
                         iconRes = R.raw.help
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
 
                     DrawerItem(
                         title = "Sign Out",
                         iconRes = R.raw.sign_out
-                    ){Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show()}
+                    ) { Toast.makeText(context, "Item Clicked", Toast.LENGTH_SHORT).show() }
 
                     // Footer
                     DrawerFooter()
@@ -145,33 +132,11 @@ fun AppDrawer() {
         },
         content = {
             Column {
-                TopAppBar(
-                    title = { Text(text = "Akhmad Fauzi") },
-                    navigationIcon = {
-                        IconButton(onClick = {
-                            coroutineScope.launch {
-                                drawerState.open()
-                            }
-                        }) {
-                            Image(
-                                modifier = Modifier.clip(CircleShape),
-                                painter = painterResource(id = R.drawable.photo_profile_example),
-                                contentDescription = "Menu",
-                            )
-                        }
-                    }
-                )
+                // Top App Bar
+                MyTopAppBar(drawerState = drawerState, coroutineScope = coroutineScope)
+
                 // Content of the screen goes here
-                Column(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(16.dp),
-                ) {
-                    Text(text = "Welcome to My App")
-                    Button(onClick = { /* Perform action */ }) {
-                        Text(text = "Click Me")
-                    }
-                }
+                content()
             }
         }
     )
@@ -269,6 +234,6 @@ fun DrawerFooter(modifier: Modifier = Modifier) {
 
 @Preview(showBackground = true)
 @Composable
-fun GreetingPreview4() {
-    AppDrawer()
+fun NavigationDrawerPrev() {
+    NavigationDrawer {}
 }

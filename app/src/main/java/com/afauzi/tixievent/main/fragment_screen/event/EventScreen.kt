@@ -1,4 +1,4 @@
-package com.afauzi.tixievent.main.fragment_screen
+package com.afauzi.tixievent.main.fragment_screen.event
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,14 +13,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun MapScreen() {
+fun EventScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Map Screen",
+            text = "Event Screen",
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             textAlign = TextAlign.Center,
@@ -31,6 +31,6 @@ fun MapScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun MapScreenPrev() {
-    MapScreen()
+fun EventScreenPrev() {
+    EventScreen()
 }

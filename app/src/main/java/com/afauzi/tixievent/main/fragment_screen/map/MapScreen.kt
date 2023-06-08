@@ -1,4 +1,4 @@
-package com.afauzi.tixievent.main.fragment_screen
+package com.afauzi.tixievent.main.fragment_screen.map
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -13,14 +13,14 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.sp
 
 @Composable
-fun ProfileScreen() {
+fun MapScreen() {
     Column(
         modifier = Modifier
             .fillMaxSize()
             .wrapContentSize(Alignment.Center)
     ) {
         Text(
-            text = "Profile Screen",
+            text = "Map Screen",
             fontWeight = FontWeight.Bold,
             modifier = Modifier.align(Alignment.CenterHorizontally),
             textAlign = TextAlign.Center,
@@ -31,6 +31,6 @@ fun ProfileScreen() {
 
 @Preview(showBackground = true)
 @Composable
-fun ProfileScreenPrev() {
-    ProfileScreen()
+fun MapScreenPrev() {
+    MapScreen()
 }
