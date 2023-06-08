@@ -160,7 +160,7 @@ fun ExploreScreen() {
                 Column(
                     modifier = Modifier
                         .fillMaxSize()
-                        .padding(16.dp),
+                        .padding(8.dp),
                 ) {
                     // Content Screen
                     Column(
