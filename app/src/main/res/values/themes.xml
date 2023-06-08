@@ -3,7 +3,7 @@
     <style name="Theme.TixiEvent" parent="android:Theme.Material.Light.NoActionBar" />
 
     <style name="Theme.TixiSplash" parent="Theme.SplashScreen">
-        <item name="windowSplashScreenBackground">@color/white</item>
+        <item name="windowSplashScreenBackground">@color/design_default_color_primary</item>
         <item name="windowSplashScreenAnimatedIcon">@drawable/logo_example</item>
         <item name="windowSplashScreenAnimationDuration">800</item>
         <item name="postSplashScreenTheme">@style/Theme.TixiEvent</item>

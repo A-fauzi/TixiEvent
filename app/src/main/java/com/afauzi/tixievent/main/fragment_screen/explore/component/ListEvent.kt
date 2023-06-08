@@ -34,13 +34,13 @@ import com.afauzi.tixievent.R
 import com.afauzi.tixievent.util.svgConverter
 
 @Composable
-fun ListEvent(posterExample: Int = R.drawable.poster_event_example) {
+fun ListEvent(posterExample: Int = R.drawable.poster_event_example, title: String = "Upcoming Event") {
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
     )
     {
-        Text(text = "Upcoming Events")
+        Text(text = title)
         Text(text = "Se all")
     }
 

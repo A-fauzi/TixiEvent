@@ -37,6 +37,8 @@ import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.afauzi.tixievent.R
 import com.afauzi.tixievent.main.component.NavigationDrawer
+import com.afauzi.tixievent.main.component.SearchView
+import com.afauzi.tixievent.main.fragment_screen.explore.component.Category
 import com.afauzi.tixievent.main.fragment_screen.explore.component.ListEvent
 import com.afauzi.tixievent.util.svgConverter
 
@@ -47,38 +49,52 @@ fun ExploreScreen() {
             .verticalScroll(rememberScrollState())
             .padding(bottom = 56.dp)
     ) {
-        // Feature List Up Coming Event
-        ListEvent()
+        // Search View
+        SearchView({}) {}
 
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Invitation
-        Card(
-            shape = RoundedCornerShape(8.dp),
-            modifier = Modifier.padding(16.dp)
+        Column(
+            modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp)
         ) {
-            Row(
-                modifier = Modifier.padding(16.dp),
-                verticalAlignment = Alignment.CenterVertically
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Category
+            Category()
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Feature List Up Coming Event
+            ListEvent()
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Invitation
+            Card(
+                shape = RoundedCornerShape(8.dp),
+                modifier = Modifier.padding(16.dp)
             ) {
-                Column {
-                    Text(text = "Invite your friends")
-                    Text(text = "Get $20 for ticket")
-                    Button(onClick = { /*TODO*/ }) {
-                        Text(text = "Invite")
+                Row(
+                    modifier = Modifier.padding(16.dp),
+                    verticalAlignment = Alignment.CenterVertically
+                ) {
+                    Column {
+                        Text(text = "Invite your friends")
+                        Text(text = "Get $20 for ticket")
+                        Button(onClick = { /*TODO*/ }) {
+                            Text(text = "Invite")
+                        }
                     }
+                    Image(
+                        painter = painterResource(id = R.drawable.gift_example),
+                        contentDescription = null
+                    )
                 }
-                Image(
-                    painter = painterResource(id = R.drawable.gift_example),
-                    contentDescription = null
-                )
             }
+
+            Spacer(modifier = Modifier.height(8.dp))
+
+            // Feature List Nearby Event
+            ListEvent(R.drawable.poster_event_example_2, "Nearby You")
         }
-
-        Spacer(modifier = Modifier.height(8.dp))
-
-        // Feature List Nearby Event
-        ListEvent(R.drawable.poster_event_example_2)
     }
 }
 
