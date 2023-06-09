@@ -14,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
@@ -40,10 +41,10 @@ fun Category() {
                     Image(
                         painter = painterResource(id = item.imageRes),
                         contentDescription = null,
-                        modifier = Modifier.clip(
-                            CircleShape
-                        )
-                            .size(100.dp)
+                        modifier = Modifier
+                            .clip(CircleShape)
+                            .size(100.dp),
+                        contentScale = ContentScale.Crop
                     )
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = item.title)

@@ -25,6 +25,7 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.afauzi.tixievent.event_detail.ui.theme.TixiEventTheme
 import com.afauzi.tixievent.main.component.NavigationDrawer
 import com.afauzi.tixievent.main.component.NavigationGraph
 
@@ -46,33 +47,21 @@ class MainActivity : ComponentActivity() {
 fun App() {
     val context = LocalContext.current
 
-    // Get the current theme colors
-    val currentColors = if (isSystemInDarkTheme()) darkColors() else lightColors()
-
-    // Customize the status bar color based on the current theme
-    val statusBarColor = when {
-        currentColors.isLight -> MaterialTheme.colors.primarySurface // Set the desired status bar color for light theme
-        else -> Color.Blue // Set the desired status bar color for dark theme
-    }
-
-    // Set the status bar color when the composition is first created
-    LaunchedEffect(statusBarColor) {
-        setStatusBarColor(context, statusBarColor)
-    }
-
     val navController = rememberNavController()
-    Scaffold(
-        bottomBar = {
-            com.afauzi.tixievent.main.component.BottomNavigation(navController = navController)
-        }
-    ) {
+    TixiEventTheme {
+        Scaffold(
+            bottomBar = {
+                com.afauzi.tixievent.main.component.BottomNavigation(navController = navController)
+            }
+        ) {
             NavigationDrawer {
-            Column(
-                modifier = Modifier
-                    .fillMaxSize()
-            ) {
-                // Content Screen
-                NavigationGraph(navController = navController)
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                ) {
+                    // Content Screen
+                    NavigationGraph(navController = navController)
+                }
             }
         }
     }

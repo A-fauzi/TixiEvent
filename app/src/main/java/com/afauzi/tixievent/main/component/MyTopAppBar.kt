@@ -1,5 +1,6 @@
 package com.afauzi.tixievent.main.component
 
+import android.content.res.Resources.Theme
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -107,7 +108,7 @@ fun MyTopAppBar(drawerState: DrawerState? = null, coroutineScope: CoroutineScope
                 )
             }
         },
-        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = MaterialTheme.colors.primarySurface)
+        colors = TopAppBarDefaults.smallTopAppBarColors(containerColor = Color(0xFF6650a4))
     )
 }
 @Composable

@@ -47,7 +47,7 @@ fun SearchView(
             .fillMaxWidth()
             .background(
                 shape = RoundedCornerShape(bottomStart = 24.dp, bottomEnd = 24.dp),
-                color = MaterialTheme.colors.primarySurface
+                color = Color(0xFF6650a4)
             )
     ) {
         IconButton(

@@ -71,6 +71,14 @@ dependencies {
 
     implementation "androidx.constraintlayout:constraintlayout-compose:1.1.0-alpha10"
 
+    // Collapsing toolbar
+    implementation "me.onebone:toolbar-compose:2.3.5"
+
+    implementation "com.google.accompanist:accompanist-systemuicontroller:0.24.7-alpha"
+    implementation 'com.google.android.material:compose-theme-adapter:1.2.1'
+
+
+    implementation platform('androidx.compose:compose-bom:2022.10.00')
     implementation platform('androidx.compose:compose-bom:2022.10.00')
     implementation platform('androidx.compose:compose-bom:2022.10.00')
     testImplementation 'junit:junit:4.13.2'
@@ -78,6 +86,7 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
     androidTestImplementation 'androidx.compose.ui:ui-test-junit4'
+    androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
     androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
     androidTestImplementation platform('androidx.compose:compose-bom:2022.10.00')
     debugImplementation 'androidx.compose.ui:ui-tooling'

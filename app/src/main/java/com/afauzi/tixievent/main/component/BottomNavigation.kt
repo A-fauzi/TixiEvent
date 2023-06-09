@@ -53,7 +53,8 @@ fun BottomNavigation(navController: NavController) {
         modifier = Modifier
             .fillMaxWidth()
             .clip(RoundedCornerShape(15.dp, 15.dp, 0.dp, 0.dp)),
-        contentColor = Color.White
+        contentColor = Color.White,
+        backgroundColor = Color(0xFF6650a4)
     ) {
         val imageLoader = ImageLoader.Builder(LocalContext.current)
             .components {

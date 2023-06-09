@@ -1,6 +1,9 @@
 package com.afauzi.tixievent.main.fragment_screen.explore.component
 
+import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -25,16 +28,19 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.afauzi.tixievent.R
+import com.afauzi.tixievent.event_detail.EventDetailActivity
 import com.afauzi.tixievent.util.svgConverter
 
 @Composable
 fun ListEvent(posterExample: Int = R.drawable.poster_event_example, title: String = "Upcoming Event") {
+    val context = LocalContext.current
     Row(
         modifier = Modifier.fillMaxWidth(),
         horizontalArrangement = Arrangement.SpaceBetween
@@ -53,7 +59,11 @@ fun ListEvent(posterExample: Int = R.drawable.poster_event_example, title: Strin
         items(itemEvent) { item ->
             Card(
                 shape = RoundedCornerShape(8.dp),
-                modifier = Modifier.padding(16.dp)
+                modifier = Modifier
+                    .padding(16.dp)
+                    .clickable {
+                    context.startActivity(Intent(context, EventDetailActivity::class.java))
+                }
             ) {
                 Column(
                     modifier = Modifier
