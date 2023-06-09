@@ -6,28 +6,20 @@ import android.content.Context
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.padding
-import androidx.compose.material.MaterialTheme
 import androidx.compose.material.Scaffold
-import androidx.compose.material.darkColors
-import androidx.compose.material.lightColors
-import androidx.compose.material.primarySurface
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
-import androidx.compose.ui.unit.dp
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
-import com.afauzi.tixievent.event_detail.ui.theme.TixiEventTheme
 import com.afauzi.tixievent.main.component.NavigationDrawer
 import com.afauzi.tixievent.main.component.NavigationGraph
+import com.afauzi.tixievent.ui.theme.TixiEventTheme
 
 class MainActivity : ComponentActivity() {
 
