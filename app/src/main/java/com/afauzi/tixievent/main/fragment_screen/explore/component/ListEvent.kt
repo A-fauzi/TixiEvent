@@ -62,8 +62,8 @@ fun ListEvent(posterExample: Int = R.drawable.poster_event_example, title: Strin
                 modifier = Modifier
                     .padding(16.dp)
                     .clickable {
-                    context.startActivity(Intent(context, EventDetailActivity::class.java))
-                }
+                        context.startActivity(Intent(context, EventDetailActivity::class.java))
+                    }
             ) {
                 Column(
                     modifier = Modifier
@@ -84,52 +84,8 @@ fun ListEvent(posterExample: Int = R.drawable.poster_event_example, title: Strin
                     Spacer(modifier = Modifier.height(8.dp))
                     Text(text = item)
                     Spacer(modifier = Modifier.height(8.dp))
-                    Row(modifier = Modifier.fillMaxWidth()) {
-                        Box(
-                            modifier = Modifier.padding(
-                                start = 0.dp,
-                                end = 16.dp
-                            )
-                        ) {
-                            Box(modifier = Modifier.offset(x = 24.dp)) {
-                                Image(
-                                    painter = painterResource(R.drawable.photo_profile_example),
-                                    contentDescription = "Image 1",
-                                    modifier = Modifier
-                                        .size(16.dp)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                            Box(modifier = Modifier.offset(x = 12.dp)) {
-                                Image(
-                                    painter = painterResource(R.drawable.person_example_1),
-                                    contentDescription = "Image 2",
-                                    modifier = Modifier
-                                        .size(16.dp)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-
-                            Box {
-                                Image(
-                                    painter = painterResource(R.drawable.person_example_2),
-                                    contentDescription = "Image 2",
-                                    modifier = Modifier
-                                        .size(16.dp)
-                                        .clip(CircleShape),
-                                    contentScale = ContentScale.Crop
-                                )
-                            }
-                        }
-                        Spacer(modifier = Modifier.width(16.dp))
-                        Text(
-                            text = "+20 Going",
-                            color = Color.Blue,
-                            fontSize = 12.sp
-                        )
-                    }
+                    // People Going
+                    PeopleGoing()
                     Spacer(modifier = Modifier.height(8.dp))
                     Row {
                         Icon(

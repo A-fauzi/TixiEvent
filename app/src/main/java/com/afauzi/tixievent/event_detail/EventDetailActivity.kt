@@ -43,6 +43,7 @@ import androidx.compose.material.IconButton
 import androidx.compose.material.TopAppBar
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Menu
+import androidx.compose.material3.Button
 import androidx.compose.material3.Card
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -79,6 +80,8 @@ import androidx.core.view.WindowCompat
 import com.afauzi.tixievent.R
 import com.afauzi.tixievent.event_detail.ui.theme.TixiEventTheme
 import com.afauzi.tixievent.main.component.MyTopAppBar
+import com.afauzi.tixievent.main.fragment_screen.explore.component.ListEvent
+import com.afauzi.tixievent.main.fragment_screen.explore.component.PeopleGoing
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import me.onebone.toolbar.CollapsingToolbarScaffold
 import me.onebone.toolbar.ScrollStrategy
@@ -91,10 +94,6 @@ class EventDetailActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         setContent {
-            val systemUiController = rememberSystemUiController()
-            SideEffect {
-                systemUiController.setSystemBarsColor(Color.Transparent, darkIcons = false)
-            }
             EventDetailApp()
         }
     }
@@ -135,7 +134,7 @@ fun CollapsingToolbarWithTopAppBar() {
             ) {
 
                 // Creating a scrollable list of 100 items
-                val items = (1..100).map { "Item $it" }
+                val items = (1..10).map { "Item $it" }
                 val lazyListState = rememberLazyListState()
                 var scrolledY = 0f
                 var previousOffset = 0
@@ -147,30 +146,51 @@ fun CollapsingToolbarWithTopAppBar() {
                     // Setting the Image as the first
                     // item and making it collapsible
                     item {
-                        Image(
-                            painter = painterResource(id = R.drawable.poster_event_example),
-                            contentDescription = null,
-                            contentScale = ContentScale.FillWidth,
+
+                        Box(
                             modifier = Modifier
                                 .graphicsLayer {
                                     scrolledY += lazyListState.firstVisibleItemScrollOffset - previousOffset
                                     translationY = scrolledY * 0.5f
                                     previousOffset = lazyListState.firstVisibleItemScrollOffset
                                 }
-                                .height(400.dp)
-                                .fillMaxWidth()
-                        )
+                        ) {
+                            Image(
+                                painter = painterResource(id = R.drawable.poster_event_example),
+                                contentDescription = null,
+                                contentScale = ContentScale.FillWidth,
+                                modifier = Modifier
+                                    .height(350.dp)
+                                    .fillMaxWidth()
+                            )
+
+                            Card(
+                                modifier = Modifier
+                                    .align(Alignment.BottomCenter)
+                                    .padding(horizontal = 50.dp),
+                                shape = RoundedCornerShape(24.dp)
+                            ) {
+                                Row(
+                                    modifier = Modifier
+                                        .fillMaxWidth()
+                                        .padding(16.dp),
+                                    verticalAlignment = Alignment.CenterVertically
+                                ) {
+                                    // People Going
+                                    PeopleGoing(32.dp, 16.sp)
+                                    Spacer(modifier = Modifier.weight(1f))
+                                    // Button
+                                    Button(onClick = { /*TODO*/ }) {
+                                        Text(text = "Invite")
+                                    }
+                                }
+                            }
+                        }
                     }
 
                     // Displaying the remaining 100 items
                     items(items) {
-                        Text(
-                            text = it,
-                            Modifier
-                                .background(Color.White)
-                                .fillMaxWidth()
-                                .padding(8.dp)
-                        )
+                       ListEvent()
                     }
                 }
             }
