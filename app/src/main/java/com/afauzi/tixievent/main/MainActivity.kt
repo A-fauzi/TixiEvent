@@ -59,13 +59,6 @@ fun App() {
     }
 }
 
-
-fun setStatusBarColor(context: Context, color: Color) {
-    val window = (context as? Activity)?.window
-    window?.statusBarColor = color.toArgb()
-}
-
-
 @Preview(showBackground = true)
 @Composable
 fun GreetingPreview() {
