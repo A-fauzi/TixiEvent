@@ -1,6 +1,7 @@
 package com.afauzi.tixievent.main.component
 
 import android.content.Intent
+import android.widget.Toast
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
@@ -42,7 +43,8 @@ import com.afauzi.tixievent.util.svgConverter
 fun SearchView(
     onQueryChange: (String) -> Unit,
     onSearchClick: () -> Unit,
-    enabled: Boolean = false
+    enabled: Boolean = false,
+    onClickFiltered: () -> Unit
 ) {
     var query by remember { mutableStateOf("") }
     val context = LocalContext.current
@@ -86,8 +88,8 @@ fun SearchView(
                 Text(text = "| Search...", color = Color.White.copy(alpha = 0.6f))
             },
             colors = TextFieldDefaults.outlinedTextFieldColors(
-                unfocusedBorderColor = Color.Transparent,
-                focusedBorderColor = Color.Transparent,
+                unfocusedBorderColor = Color(0xFF6650a4),
+                focusedBorderColor = Color(0xFF6650a4),
                 textColor = Color.White
             ),
             enabled = enabled
@@ -96,7 +98,11 @@ fun SearchView(
             icon = rememberAsyncImagePainter(
                 model = R.raw.bars_filter,
                 svgConverter()
-            ), text = "Filters"
+            ),
+            text = "Filters",
+            onClick = {
+                onClickFiltered()
+            }
         )
     }
 }
@@ -105,5 +111,5 @@ fun SearchView(
 @Preview(showBackground = true)
 @Composable
 fun SearchViewPrev() {
-    SearchView({}, {})
+    SearchView({}, {}, onClickFiltered = {})
 }

@@ -57,7 +57,7 @@ fun MyTopAppBar(
     )
 }
 @Composable
-fun ChipWithIconAndText(icon: Painter, text: String) {
+fun ChipWithIconAndText(icon: Painter, text: String, onClick: () -> Unit) {
     Box(
         modifier = Modifier.padding(8.dp),
         contentAlignment = Alignment.CenterStart,
@@ -76,7 +76,7 @@ fun ChipWithIconAndText(icon: Painter, text: String) {
                                 .size(32.dp),
                             content = {
                                 IconButton(
-                                    onClick = { /*TODO*/ },
+                                    onClick = { onClick() },
                                     modifier = Modifier.align(Alignment.Center)
                                 ) {
                                     Icon(
