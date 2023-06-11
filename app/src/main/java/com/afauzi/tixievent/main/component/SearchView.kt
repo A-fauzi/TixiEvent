@@ -1,6 +1,8 @@
 package com.afauzi.tixievent.main.component
 
+import android.content.Intent
 import androidx.compose.foundation.background
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -25,21 +27,25 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.rememberAsyncImagePainter
 import com.afauzi.tixievent.R
+import com.afauzi.tixievent.search_event.SearchEventActivity
 import com.afauzi.tixievent.util.svgConverter
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun SearchView(
     onQueryChange: (String) -> Unit,
-    onSearchClick: () -> Unit
+    onSearchClick: () -> Unit,
+    enabled: Boolean = false
 ) {
     var query by remember { mutableStateOf("") }
+    val context = LocalContext.current
 
     Row(
         verticalAlignment = Alignment.CenterVertically,
@@ -68,7 +74,9 @@ fun SearchView(
             },
             modifier = Modifier
                 .weight(1f)
-                .clip(RoundedCornerShape(16.dp)),
+                .clickable {
+                    context.startActivity(Intent(context, SearchEventActivity::class.java))
+                },
             keyboardOptions = KeyboardOptions(
                 keyboardType = KeyboardType.Text,
                 imeAction = ImeAction.Search
@@ -81,7 +89,8 @@ fun SearchView(
                 unfocusedBorderColor = Color.Transparent,
                 focusedBorderColor = Color.Transparent,
                 textColor = Color.White
-            )
+            ),
+            enabled = enabled
         )
         ChipWithIconAndText(
             icon = rememberAsyncImagePainter(
@@ -95,6 +104,6 @@ fun SearchView(
 
 @Preview(showBackground = true)
 @Composable
-fun SearchViewPrev(){
+fun SearchViewPrev() {
     SearchView({}, {})
 }

@@ -50,7 +50,7 @@ fun ExploreScreen() {
             .padding(bottom = 56.dp)
     ) {
         // Search View
-        SearchView({}) {}
+        SearchView({}, {})
 
         Column(
             modifier = Modifier.padding(start = 8.dp, top = 8.dp, end = 8.dp)

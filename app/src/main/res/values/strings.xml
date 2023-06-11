@@ -4,4 +4,5 @@
     <string name="title_activity_navigation_drawer">NavigationDrawerActivity</string>
     <string name="title_activity_event_detail">EventDetailActivity</string>
     <string name="google_api_key">AIzaSyCyUMrLQnlNstXJUOwhIZMOgpAPncs79YY</string>
+    <string name="title_activity_search_event">SearchEventActivity</string>
 </resources>
