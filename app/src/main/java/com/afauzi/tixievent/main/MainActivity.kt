@@ -17,6 +17,7 @@ import androidx.compose.ui.graphics.toArgb
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.navigation.compose.rememberNavController
+import com.afauzi.tixievent.main.component.BottomNavigation
 import com.afauzi.tixievent.main.component.NavigationDrawer
 import com.afauzi.tixievent.main.component.NavigationGraph
 import com.afauzi.tixievent.ui.theme.TixiEventTheme
@@ -37,13 +38,12 @@ class MainActivity : ComponentActivity() {
 @SuppressLint("UnusedMaterialScaffoldPaddingParameter")
 @Composable
 fun App() {
-    val context = LocalContext.current
 
     val navController = rememberNavController()
     TixiEventTheme {
         Scaffold(
             bottomBar = {
-                com.afauzi.tixievent.main.component.BottomNavigation(navController = navController)
+                BottomNavigation(navController = navController)
             }
         ) {
             NavigationDrawer {
